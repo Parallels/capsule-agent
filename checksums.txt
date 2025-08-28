@@ -1,0 +1,5 @@
+83ee3cc06910d2c32f3927a59cc21d3067ded314d9316377c88252b24ed4fd02  ../../artifacts/capsule-agent/CHANGELOG.md
+835a50a2b4ef660c5ffa5218827056142d5e74942c26fbdf4d618ae0b2c812a5  ../../artifacts/capsule-agent/capsule-agent-linux-amd64
+c3b69639607ceec76660e3d3b3419dae23b0f7575e359f9f0c2d81834d4ad3e7  ../../artifacts/capsule-agent/capsule-agent-linux-amd64.sig
+ce468964957454ceb78e091b75d7c87e6643a46e03b53eb6e633ce96b6a24874  ../../artifacts/capsule-agent/capsule-agent-linux-arm64
+aabba38b7c1e2afdb2fc7f260fc04299a4236be1c4f77a1725836331fa86781b  ../../artifacts/capsule-agent/capsule-agent-linux-arm64.sig
