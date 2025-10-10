@@ -1,6 +1,6 @@
-# capsule-agent v0.1.1-canary
+# capsule-agent v0.1.3-canary
 
-**Version**: 0.1.1-canary
+**Version**: 0.1.3-canary
 **Release Channel**: canary
 
 ## Installation
