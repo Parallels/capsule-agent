@@ -52,35 +52,35 @@ while [[ $# -gt 0 ]]; do
                 exit 0
             fi
             ;;
-        user-id)
+        --user-id)
             USER_ID="$2"
             shift 2
             ;;
-        hardware-id)
+        --hardware-id)
             HARDWARE_ID="$2"
             shift 2
             ;;
-        application-id)
+        --application-id)
             APPLICATION_ID="$2"
             shift 2
             ;;
-        pd-license)
+        --pd-license)
             PD_LICENSE="$2"
             shift 2
             ;;
-        pd-license-type)
+        --pd-license-type)
             PD_LICENSE_TYPE="$2"
             shift 2
             ;;
-        pd-license-is-trial)
+        --pd-license-is-trial)
             PD_LICENSE_IS_TRIAL="$2"
             shift 2
             ;;
-        pd-license-is-volume)
+        --pd-license-is-volume)
             PD_LICENSE_IS_VOLUME="$2"
             shift 2
             ;;
-        pd-id)
+        --pd-id)
             PD_ID="$2"
             shift 2
             ;;
