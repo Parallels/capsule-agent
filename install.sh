@@ -14,6 +14,14 @@ SERVICE_NAME="capsule-agent"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 BINARY_PATH="/usr/local/bin/${SERVICE_NAME}"
 ENV_FILE="/usr/local/bin/${SERVICE_NAME}.env"
+HARDWARE_ID="unknown"
+APPLICATION_ID="unknown"
+USER_ID="unknown"
+PD_LICENSE="unknown"
+PD_LICENSE_TYPE="unknown"
+PD_LICENSE_IS_TRIAL="unknown"
+PD_LICENSE_IS_VOLUME="unknown"
+PD_ID="unknown"
 
 function usage() {
     cat <<EOF
@@ -32,7 +40,9 @@ EOF
 }
 
 ACTION="install"
-if [[ $# -gt 0 ]]; then
+VERSION=""
+
+while [[ $# -gt 0 ]]; do
     case "$1" in
         install|update|uninstall|help|-h|--help)
             ACTION=$1
@@ -42,13 +52,38 @@ if [[ $# -gt 0 ]]; then
                 exit 0
             fi
             ;;
-    esac
-fi
-
-VERSION=""
-
-while [[ $# -gt 0 ]]; do
-    case "$1" in
+        user-id)
+            USER_ID="$2"
+            shift 2
+            ;;
+        hardware-id)
+            HARDWARE_ID="$2"
+            shift 2
+            ;;
+        application-id)
+            APPLICATION_ID="$2"
+            shift 2
+            ;;
+        pd-license)
+            PD_LICENSE="$2"
+            shift 2
+            ;;
+        pd-license-type)
+            PD_LICENSE_TYPE="$2"
+            shift 2
+            ;;
+        pd-license-is-trial)
+            PD_LICENSE_IS_TRIAL="$2"
+            shift 2
+            ;;
+        pd-license-is-volume)
+            PD_LICENSE_IS_VOLUME="$2"
+            shift 2
+            ;;
+        pd-id)
+            PD_ID="$2"
+            shift 2
+            ;;
         --pre-release)
             USE_PRERELEASE=true
             shift
@@ -60,10 +95,6 @@ while [[ $# -gt 0 ]]; do
         --port)
             PORT="$2"
             shift 2
-            ;;
-        --help|-h)
-            usage
-            exit 0
             ;;
         *)
             echo "Unknown option: $1" >&2
@@ -160,6 +191,15 @@ LXC_AGENT_CORS_ALLOW_ORIGINS=*
 LXC_AGENT_SERVER_BASE_URL=http://localhost:$PORT
 LXC_AGENT_REGISTRY_BASE_URL=https://capsule-registry.local-build.co
 LXC_AGENT_SERVER_API_PORT=$PORT
+LXC_AGENT_USER_ID=$USER_ID
+LXC_AGENT_TELEMETRY_HARDWARE_ID=$HARDWARE_ID
+LXC_AGENT_TELEMETRY_APPLICATION_ID=$APPLICATION_ID
+LXC_AGENT_TELEMETRY_USER_ID=$HARDWARE_ID-$APPLICATION_ID
+LXC_AGENT_TELEMETRY_PD_LICENSE=$PD_LICENSE
+LXC_AGENT_TELEMETRY_PD_LICENSE_TYPE=$PD_LICENSE_TYPE
+LXC_AGENT_TELEMETRY_PD_LICENSE_IS_TRIAL=$PD_LICENSE_IS_TRIAL
+LXC_AGENT_TELEMETRY_PD_LICENSE_IS_VOLUME=$PD_LICENSE_IS_VOLUME
+LXC_AGENT_TELEMETRY_PD_ID=$PD_ID
 EOF
 }
 

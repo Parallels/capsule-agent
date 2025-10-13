@@ -2,6 +2,12 @@
 
 
 Release 0.1.3
+Release 0.1.1
+Release 0.1.4
+# Release v0.1.6
+
+
+Release 0.1.3
 # Changelog - Capsule Agent
 
 All notable changes to the Capsule Agent module will be documented in this file.
