@@ -24,7 +24,7 @@ PD_LICENSE_IS_VOLUME="unknown"
 PD_ID="unknown"
 
 function usage() {
-    cat <<EOF
+    cat <<EOF >&2
 Usage: $0 [install|update|uninstall] [options]
 
 Commands:
@@ -139,16 +139,16 @@ function resolve_arch() {
 function get_release_tag() {
     local tag
     if [[ -n "$VERSION" ]]; then
-        echo "✅ Using version: $VERSION"
+        echo "✅ Using version: $VERSION" >&2
         tag="$VERSION"
     else
-        echo "✅ Using latest release"
-        echo "📦 Getting release information..."
+        echo "✅ Using latest release" >&2
+        echo "📦 Getting release information..." >&2
         if [[ "$USE_PRERELEASE" == true ]]; then
-            echo "🔍 Including pre-releases in search..."
+            echo "🔍 Including pre-releases in search..." >&2
             tag=$(curl -s "https://api.github.com/repos/$OWNER/$REPO/releases" | jq -r 'map(select(.prerelease == true or .prerelease == false)) | sort_by(.created_at) | reverse | .[0].tag_name')
         else
-            echo "🔍 Looking for stable releases only..."
+            echo "🔍 Looking for stable releases only..." >&2
             tag=$(curl -s "https://api.github.com/repos/$OWNER/$REPO/releases/latest" | jq -r '.tag_name')
         fi
     fi
@@ -166,9 +166,9 @@ function download_binary() {
     local binary_name=$2
     local tmp_dir
     tmp_dir=$(mktemp -d)
-    trap 'rm -rf "$tmp_dir"' RETURN
+    trap '[ -n "${tmp_dir:-}" ] && rm -rf "$tmp_dir"' RETURN
 
-    echo "📥 Downloading Capsule Agent ${release_tag}..."
+    echo "📥 Downloading Capsule Agent ${release_tag}..." >&2
     local download_url="https://github.com/$OWNER/$REPO/releases/download/${release_tag}/${binary_name}"
     local sig_url="${download_url}.sig"
 
@@ -225,13 +225,13 @@ EOF
 
 function stop_service_if_exists() {
     if [[ -f "$SERVICE_FILE" ]]; then
-        echo "🛑 Stopping Capsule Agent service..."
+        echo "🛑 Stopping Capsule Agent service..." >&2
         systemctl stop "$SERVICE_NAME" || true
     fi
 }
 
 function start_service() {
-    echo "🚀 Starting Capsule Agent service..."
+    echo "🚀 Starting Capsule Agent service..." >&2
     systemctl daemon-reload
     systemctl enable "$SERVICE_NAME.service"
     systemctl start "$SERVICE_NAME.service"
@@ -239,7 +239,7 @@ function start_service() {
 
 function ensure_service_running() {
     if systemctl is-active --quiet "$SERVICE_NAME"; then
-        echo "✅ Capsule Agent service is running"
+        echo "✅ Capsule Agent service is running" >&2
     else
         echo "❌ Capsule Agent service failed to start" >&2
         systemctl status "$SERVICE_NAME.service" --no-pager || true
@@ -249,7 +249,7 @@ function ensure_service_running() {
 
 function install_capsule_agent() {
     ensure_requirements
-    echo "🔧 Installing Capsule Agent..."
+    echo "🔧 Installing Capsule Agent..." >&2
     local binary_name
     binary_name=$(resolve_arch)
     local release_tag
@@ -265,7 +265,7 @@ function install_capsule_agent() {
 
 function update_capsule_agent() {
     ensure_requirements
-    echo "♻️  Updating Capsule Agent..."
+    echo "♻️  Updating Capsule Agent..." >&2
 
     if [[ ! -x "$BINARY_PATH" ]]; then
         echo "❌ Capsule Agent is not installed. Run install first." >&2
@@ -276,18 +276,18 @@ function update_capsule_agent() {
     binary_name=$(resolve_arch)
     local release_tag
     release_tag=$(get_release_tag)
-    echo "📌 Selected release: ${release_tag}"
+    echo "📌 Selected release: ${release_tag}" >&2
 
     stop_service_if_exists
     download_binary "$release_tag" "$binary_name"
-    echo "� Restarting Capsule Agent service..."
+    echo "� Restarting Capsule Agent service..." >&2
     systemctl restart "$SERVICE_NAME.service"
     ensure_service_running
 }
 
 function uninstall_capsule_agent() {
     ensure_requirements
-    echo "🧹 Uninstalling Capsule Agent..."
+    echo "🧹 Uninstalling Capsule Agent..." >&2
 
     stop_service_if_exists
     systemctl disable "$SERVICE_NAME.service" >/dev/null 2>&1 || true
@@ -297,7 +297,7 @@ function uninstall_capsule_agent() {
     rm -f "$BINARY_PATH"
     rm -f "$ENV_FILE"
 
-    echo "✅ Capsule Agent removed"
+    echo "✅ Capsule Agent removed" >&2
 }
 
 case "$ACTION" in
