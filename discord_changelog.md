@@ -1,10 +1,10 @@
-## What's Changed in capsule-agent v0.1.9-canary
+## What's Changed in capsule-agent v0.1.10-canary
 
 This is a **canary** release of the capsule-agent module.
 
 ### Module Information
 - **Module**: capsule-agent
-- **Version**: 0.1.9-canary
+- **Version**: 0.1.10-canary
 - **Path**: cmd/agent
 - **Environment**: development
 - **Release Date**: 2025-10-15

@@ -12,6 +12,25 @@ Release 0.0.3
 Release 0.1.3
 Release 0.1.8
 Release 0.1.9
+Release 0.1.4
+Release 0.1.5
+Release 0.0.4
+Release 0.0.5
+Release 0.1.10
+# Release v0.1.6
+
+
+Release 0.1.3
+Release 0.1.1
+Release 0.1.4
+Release 0.1.5
+Release 0.1.2
+Release 0.1.6
+Release 0.1.7
+Release 0.0.3
+Release 0.1.3
+Release 0.1.8
+Release 0.1.9
 # Release v0.1.6
 
 
