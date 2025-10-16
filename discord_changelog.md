@@ -1,25 +1,12 @@
-## What's Changed in capsule-agent v0.1.10-canary
+## What's Changed in capsule-agent v0.1.11-canary
 
-This is a **canary** release of the capsule-agent module.
-
-### Module Information
-- **Module**: capsule-agent
-- **Version**: 0.1.10-canary
-- **Path**: cmd/agent
-- **Environment**: development
-- **Release Date**: 2025-10-15
+Base version (stripped): 0.1.11
+- Enhance issue templates and workflows to extract changelog content for releases #38 
 
 ### Installation
 
-Download the appropriate package for your platform from the release assets.
+Download the appropriate package for your platform from the [release assets](https://github.com/Parallels/capsule-agent/releases/tag/v0.1.11-canary).
 
-### Docker Images
-This module does not include Docker images.
-
-### Features
-- Latest updates and improvements for capsule-agent
-- Bug fixes and optimizations
-- Enhanced stability and performance
-
-### Source Repository
-This release was automatically synced from the [Capsule Manager monorepo](https://github.com/Parallels-Corp/capsule-manager).
+### Links
+- **Public Repository**: [github.com/Parallels/capsule-agent](https://github.com/Parallels/capsule-agent)
+- **Monorepo Release**: [capsule-agent-v0.1.11-canary](https://github.com/Parallels-Corp/capsule-manager/releases/tag/capsule-agent-v0.1.11-canary)

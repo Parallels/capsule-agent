@@ -1,118 +1,14 @@
-# Release v0.1.6
-
-
-Release 0.1.3
-Release 0.1.1
-Release 0.1.4
-Release 0.1.5
-Release 0.1.2
-Release 0.1.6
-Release 0.1.7
-Release 0.0.3
-Release 0.1.3
-Release 0.1.8
-Release 0.1.9
-Release 0.1.4
-Release 0.1.5
-Release 0.0.4
-Release 0.0.5
-Release 0.1.10
-# Release v0.1.6
-
-
-Release 0.1.3
-Release 0.1.1
-Release 0.1.4
-Release 0.1.5
-Release 0.1.2
-Release 0.1.6
-Release 0.1.7
-Release 0.0.3
-Release 0.1.3
-Release 0.1.8
-Release 0.1.9
-# Release v0.1.6
-
-
-Release 0.1.3
-Release 0.1.1
-Release 0.1.4
-Release 0.1.5
-Release 0.1.2
-Release 0.1.6
-Release 0.1.7
-Release 0.0.3
-Release 0.1.3
-Release 0.1.8
-# Release v0.1.6
-
-
-Release 0.1.3
-Release 0.1.1
-Release 0.1.4
-Release 0.1.5
-Release 0.1.2
-Release 0.1.6
-Release 0.1.7
-# Release v0.1.6
-
-
-Release 0.1.3
-Release 0.1.1
-Release 0.1.4
-Release 0.1.5
-Release 0.1.2
-Release 0.1.6
-# Release v0.1.6
-
-
-Release 0.1.3
-Release 0.1.1
-Release 0.1.4
-Release 0.1.5
-# Release v0.1.6
-
-
-Release 0.1.3
-Release 0.1.1
-Release 0.1.4
-# Release v0.1.6
-
-
-Release 0.1.3
 # Changelog - Capsule Agent
 
 All notable changes to the Capsule Agent module will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-## [0.1.1] - 2025-08-27
-
-
-
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.11] - 2025-10-16
 
-### Added
-- Container management capabilities
-- Docker integration
-- LXC container support
-- Real-time monitoring
-- REST API endpoints
-- WebSocket communication
+- Enhance issue templates and workflows to extract changelog content for releases #38 
 
-### Changed
+## [0.0.0] - 2024-08-26
 
-### Fixed
-
-### Removed
-
-## [0.1.0] - 2024-08-26
-
-### Added
 - Initial release of Capsule Agent
-- Container lifecycle management
-- Docker and LXC support
-- API server implementation
-- Event-driven architecture
-- Authentication and authorization
