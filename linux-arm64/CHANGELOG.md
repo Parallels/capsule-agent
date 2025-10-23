@@ -5,6 +5,14 @@ All notable changes to the Capsule Agent module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.13] - 2025-10-23
+
+- Improved the design of the error dialog
+- Fixed an issue where the error messages from the backend API would generate an error
+- Enabled the debug messages in the log of the backend
+- Fixed an issue in the install script that had the wrong variable name for the marketplace
+- Fixed an issue in the search bar where it was not detecting empty strings and resetting the view
+
 ## [0.1.12] - 2025-10-20
 
 - Modified release-capsule-marketplace-registry.yml to change environment descriptions and suffixes for canary and beta.
