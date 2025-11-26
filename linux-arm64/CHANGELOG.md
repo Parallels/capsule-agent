@@ -5,6 +5,11 @@ All notable changes to the Capsule Agent module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.20] - 2025-11-25
+
+- refactor of the UI components
+- some fixes for the backend
+
 ## [0.1.13] - 2025-10-23
 
 - Improved the design of the error dialog
