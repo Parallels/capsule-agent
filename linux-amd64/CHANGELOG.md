@@ -5,6 +5,12 @@ All notable changes to the Capsule Agent module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.22] - 2025-12-02
+
+- Added new system variable to identify the docker host
+- Fixed several issues with the flow of the capsule
+- Added some new messages for the health check
+
 ## [0.1.21] - 2025-11-26
 
 
