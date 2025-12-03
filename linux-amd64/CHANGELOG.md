@@ -5,6 +5,13 @@ All notable changes to the Capsule Agent module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.23] - 2025-12-03
+
+- Removed some duplicated go routines
+- Improved stability on the monitoring
+- Fix some issues with telemetry
+- Fixed some memory leaks
+
 ## [0.1.22] - 2025-12-02
 
 - Added new system variable to identify the docker host

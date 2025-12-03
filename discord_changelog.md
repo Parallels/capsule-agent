@@ -1,14 +1,15 @@
-## What's Changed in capsule-agent v0.1.22-canary
+## What's Changed in capsule-agent v0.1.23-canary
 
-Base version (stripped): 0.1.22
-- Added new system variable to identify the docker host
-- Fixed several issues with the flow of the capsule
-- Added some new messages for the health check
+Base version (stripped): 0.1.23
+- Removed some duplicated go routines
+- Improved stability on the monitoring
+- Fix some issues with telemetry
+- Fixed some memory leaks
 
 ### Installation
 
-Download the appropriate package for your platform from the [release assets](https://github.com/Parallels/capsule-agent/releases/tag/v0.1.22-canary).
+Download the appropriate package for your platform from the [release assets](https://github.com/Parallels/capsule-agent/releases/tag/v0.1.23-canary).
 
 ### Links
 - **Public Repository**: [github.com/Parallels/capsule-agent](https://github.com/Parallels/capsule-agent)
-- **Monorepo Release**: [capsule-agent-v0.1.22-canary](https://github.com/Parallels-Corp/capsule-manager/releases/tag/capsule-agent-v0.1.22-canary)
+- **Monorepo Release**: [capsule-agent-v0.1.23-canary](https://github.com/Parallels-Corp/capsule-manager/releases/tag/capsule-agent-v0.1.23-canary)
