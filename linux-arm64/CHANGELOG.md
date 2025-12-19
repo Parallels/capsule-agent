@@ -5,6 +5,16 @@ All notable changes to the Capsule Agent module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.26] - 2025-12-19
+
+- Added a new flow for the user when they have a application that requires credentials, fix #106
+- Fixed an issue where a modal error was showing in the wrong place #105
+- Fixed some minor issues with the UI, fix #109 
+- Fixed an issue where Onboarding would failed for users that had used old capsules app
+- Fixed an issue where the marketplace would crash if two users had an empty email
+- Fixed issues with the users database constrains
+- Updated install scripts to not overwrite the existing .env file
+
 ## [0.1.25] - 2025-12-10
 
 
