@@ -1,1 +1,1 @@
-170ef272844a6e27216208ca54f17bacd92bbca4521be1d64afbad8b334cb7d9  capsule-agent-linux-amd64
+5325cbee34b90412bd897f23162a62c789dd2b68b32e99d7f3aa16599359cefe  capsule-agent-linux-amd64

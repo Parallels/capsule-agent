@@ -5,6 +5,16 @@ All notable changes to the Capsule Agent module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.27] - 2026-01-15
+
+- Improved the way we deal with user feedback
+- Added extra fields to the Capsules #118 
+- Added the new marketplace application #116 
+- Added a recovery for DNS issues with dnsmasq
+- Added a new wait for the app to be ready
+- Added better usage of urls when opening the page
+- Added the new links to the marketplace
+
 ## [0.1.26] - 2025-12-19
 
 - Added a new flow for the user when they have a application that requires credentials, fix #106
