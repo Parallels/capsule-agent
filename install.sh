@@ -23,6 +23,7 @@ PD_LICENSE_IS_TRIAL="unknown"
 PD_LICENSE_IS_VOLUME="unknown"
 PD_ID="unknown"
 ENVIRONMENT="stable"
+CADDY_DOMAIN="parallels.internal"
 
 function usage() {
     cat <<EOF >&2
@@ -37,6 +38,7 @@ Options:
   --version <tag>    Use a specific release tag (e.g. v0.1.1)
   --pre-release      Allow prerelease versions (default: true)
   --port <number>    API port used when generating capsule-agent.env (install only)
+  --caddy-domain <domain> Domain to use for Caddy (default: parallels.internal)
 EOF
 }
 
@@ -99,6 +101,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --environment)
             ENVIRONMENT="$2"
+            shift 2
+            ;;
+        --caddy-domain)
+            CADDY_DOMAIN="$2"
             shift 2
             ;;
         *)
@@ -206,6 +212,7 @@ LXC_AGENT_TELEMETRY_PD_LICENSE_IS_TRIAL=$PD_LICENSE_IS_TRIAL
 LXC_AGENT_TELEMETRY_PD_LICENSE_IS_VOLUME=$PD_LICENSE_IS_VOLUME
 LXC_AGENT_TELEMETRY_PD_ID=$PD_ID
 LXC_AGENT_APP_ENVIRONMENT=$ENVIRONMENT
+LXC_AGENT_CADDY_DEFAULT_DOMAIN=$CADDY_DOMAIN
 EOF
 }
 
