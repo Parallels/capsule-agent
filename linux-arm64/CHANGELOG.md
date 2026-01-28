@@ -5,19 +5,29 @@ All notable changes to the Capsule Agent module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.30] - 2026-01-28
+
+- Added a channel selection to the settings to decide the update channel
+- Added a dynamic updater mechanism, fixes #142
+- Removed the checkbox in the end of the technical feedback, fixes #138
+- Fixed an issue with the notification polling using the wrong url
+- Fixed an error on the app-feedback using the wrong type
+- fixed an error where the technical report woul not use the right endpoint
+- Reworked DNS resolver
+- Further improvements in the Marketplace
+- Fixed a bug where you were not able to install a application that you had searched in the apps
+- Further stabilisation of the system
+- Added extra fields for the capsules blueprint 
+
 ## [0.1.29] - 2026-01-19
 
-
-
 ## [0.1.28] - 2026-01-19
-
-
 
 ## [0.1.27] - 2026-01-15
 
 - Improved the way we deal with user feedback
-- Added extra fields to the Capsules #118 
-- Added the new marketplace application #116 
+- Added extra fields to the Capsules #118
+- Added the new marketplace application #116
 - Added a recovery for DNS issues with dnsmasq
 - Added a new wait for the app to be ready
 - Added better usage of urls when opening the page
@@ -27,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added a new flow for the user when they have a application that requires credentials, fix #106
 - Fixed an issue where a modal error was showing in the wrong place #105
-- Fixed some minor issues with the UI, fix #109 
+- Fixed some minor issues with the UI, fix #109
 - Fixed an issue where Onboarding would failed for users that had used old capsules app
 - Fixed an issue where the marketplace would crash if two users had an empty email
 - Fixed issues with the users database constrains
@@ -35,11 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.25] - 2025-12-10
 
-
-
 ## [0.1.24] - 2025-12-04
-
-
 
 ## [0.1.23] - 2025-12-03
 
@@ -55,8 +61,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added some new messages for the health check
 
 ## [0.1.21] - 2025-11-26
-
-
 
 ## [0.1.20] - 2025-11-25
 
@@ -101,7 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.11] - 2025-10-16
 
-- Enhance issue templates and workflows to extract changelog content for releases #38 
+- Enhance issue templates and workflows to extract changelog content for releases #38
 
 ## [0.0.0] - 2024-08-26
 

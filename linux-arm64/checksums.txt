@@ -1,1 +1,1 @@
-98ebb1d542751c7cab43731bc0e79775906012c0270080fe86bc35e064039edf  capsule-agent-linux-arm64
+52015192454117ab81fe3fb48c686ee101d5ee20ae97e4dabe8cc7f55debae13  capsule-agent-linux-arm64
