@@ -24,6 +24,8 @@ PD_LICENSE_IS_VOLUME="unknown"
 PD_ID="unknown"
 ENVIRONMENT="stable"
 CADDY_DOMAIN="parallels.internal"
+MARKETPLACE_REGISTRY_URL="https://capsules-registry.parallels.com"
+ROOT_PASSWORD="root"
 
 function usage() {
     cat <<EOF >&2
@@ -39,6 +41,8 @@ Options:
   --pre-release      Allow prerelease versions (default: true)
   --port <number>    API port used when generating capsule-agent.env (install only)
   --caddy-domain <domain> Domain to use for Caddy (default: parallels.internal)
+  --marketplace-url <url> Marketplace registry URL (default: https://capsules-registry.parallels.com)
+  --root-password <password> Root user password (default: root)
 EOF
 }
 
@@ -105,6 +109,14 @@ while [[ $# -gt 0 ]]; do
             ;;
         --caddy-domain)
             CADDY_DOMAIN="$2"
+            shift 2
+            ;;
+        --marketplace-url)
+            MARKETPLACE_REGISTRY_URL="$2"
+            shift 2
+            ;;
+        --root-password)
+            ROOT_PASSWORD="$2"
             shift 2
             ;;
         *)
@@ -197,10 +209,10 @@ function create_env_file() {
     cat <<EOF > "$ENV_FILE"
 LXC_AGENT_DATABASE_MIGRATE=true
 LXC_AGENT_ROOT_USER_USERNAME=root
-LXC_AGENT_ROOT_USER_PASSWORD=root
+LXC_AGENT_ROOT_USER_PASSWORD=$ROOT_PASSWORD
 LXC_AGENT_CORS_ALLOW_ORIGINS=*
 LXC_AGENT_SERVER_BASE_URL=http://localhost:$PORT
-LXC_AGENT_MARKETPLACE_REGISTRY_BASE_URL=https://capsule-registry.local-build.co
+LXC_AGENT_MARKETPLACE_REGISTRY_BASE_URL=$MARKETPLACE_REGISTRY_URL
 LXC_AGENT_SERVER_API_PORT=$PORT
 LXC_AGENT_USER_ID=$USER_ID
 LXC_AGENT_TELEMETRY_HARDWARE_ID=$HARDWARE_ID
@@ -279,6 +291,84 @@ function install_capsule_agent() {
     ensure_service_running
 }
 
+function update_env_value() {
+    local key="$1"
+    local value="$2"
+    if [[ -f "$ENV_FILE" ]] && [[ -n "$value" ]]; then
+        if grep -q "^${key}=" "$ENV_FILE"; then
+            sed -i "s|^${key}=.*|${key}=${value}|" "$ENV_FILE"
+            echo "  ✓ Updated $key" >&2
+        else
+            echo "${key}=${value}" >> "$ENV_FILE"
+            echo "  ✓ Added $key" >&2
+        fi
+    fi
+}
+
+function update_env_file_if_needed() {
+    echo "📝 Checking for environment updates..." >&2
+    local updated=false
+
+    if [[ "$MARKETPLACE_REGISTRY_URL" != "https://capsules-registry.parallels.com" ]] && [[ -n "$MARKETPLACE_REGISTRY_URL" ]]; then
+        update_env_value "LXC_AGENT_MARKETPLACE_REGISTRY_BASE_URL" "$MARKETPLACE_REGISTRY_URL"
+        updated=true
+    fi
+    if [[ "$ROOT_PASSWORD" != "root" ]] && [[ -n "$ROOT_PASSWORD" ]]; then
+        update_env_value "LXC_AGENT_ROOT_USER_PASSWORD" "$ROOT_PASSWORD"
+        updated=true
+    fi
+    if [[ "$USER_ID" != "unknown" ]] && [[ -n "$USER_ID" ]]; then
+        update_env_value "LXC_AGENT_USER_ID" "$USER_ID"
+        update_env_value "LXC_AGENT_TELEMETRY_USER_ID" "$USER_ID"
+        updated=true
+    fi
+    if [[ "$HARDWARE_ID" != "unknown" ]] && [[ -n "$HARDWARE_ID" ]]; then
+        update_env_value "LXC_AGENT_TELEMETRY_HARDWARE_ID" "$HARDWARE_ID"
+        updated=true
+    fi
+    if [[ "$APPLICATION_ID" != "unknown" ]] && [[ -n "$APPLICATION_ID" ]]; then
+        update_env_value "LXC_AGENT_TELEMETRY_APPLICATION_ID" "$APPLICATION_ID"
+        updated=true
+    fi
+    if [[ "$PD_LICENSE" != "unknown" ]] && [[ -n "$PD_LICENSE" ]]; then
+        update_env_value "LXC_AGENT_TELEMETRY_PD_LICENSE" "$PD_LICENSE"
+        updated=true
+    fi
+    if [[ "$PD_LICENSE_TYPE" != "unknown" ]] && [[ -n "$PD_LICENSE_TYPE" ]]; then
+        update_env_value "LXC_AGENT_TELEMETRY_PD_LICENSE_TYPE" "$PD_LICENSE_TYPE"
+        updated=true
+    fi
+    if [[ "$PD_LICENSE_IS_TRIAL" != "unknown" ]] && [[ -n "$PD_LICENSE_IS_TRIAL" ]]; then
+        update_env_value "LXC_AGENT_TELEMETRY_PD_LICENSE_IS_TRIAL" "$PD_LICENSE_IS_TRIAL"
+        updated=true
+    fi
+    if [[ "$PD_LICENSE_IS_VOLUME" != "unknown" ]] && [[ -n "$PD_LICENSE_IS_VOLUME" ]]; then
+        update_env_value "LXC_AGENT_TELEMETRY_PD_LICENSE_IS_VOLUME" "$PD_LICENSE_IS_VOLUME"
+        updated=true
+    fi
+    if [[ "$PD_ID" != "unknown" ]] && [[ -n "$PD_ID" ]]; then
+        update_env_value "LXC_AGENT_TELEMETRY_PD_ID" "$PD_ID"
+        updated=true
+    fi
+    if [[ "$ENVIRONMENT" != "stable" ]] && [[ -n "$ENVIRONMENT" ]]; then
+        update_env_value "LXC_AGENT_APP_ENVIRONMENT" "$ENVIRONMENT"
+        updated=true
+    fi
+    if [[ "$CADDY_DOMAIN" != "parallels.internal" ]] && [[ -n "$CADDY_DOMAIN" ]]; then
+        update_env_value "LXC_AGENT_CADDY_DEFAULT_DOMAIN" "$CADDY_DOMAIN"
+        updated=true
+    fi
+    if [[ "$PORT" != "5000" ]] && [[ -n "$PORT" ]]; then
+        update_env_value "LXC_AGENT_SERVER_API_PORT" "$PORT"
+        update_env_value "LXC_AGENT_SERVER_BASE_URL" "http://localhost:$PORT"
+        updated=true
+    fi
+
+    if [[ "$updated" == "false" ]]; then
+        echo "  No environment updates needed" >&2
+    fi
+}
+
 function update_capsule_agent() {
     ensure_requirements
     echo "♻️  Updating Capsule Agent..." >&2
@@ -296,7 +386,8 @@ function update_capsule_agent() {
 
     stop_service_if_exists
     download_binary "$release_tag" "$binary_name"
-    echo "� Restarting Capsule Agent service..." >&2
+    update_env_file_if_needed
+    echo "🔄 Restarting Capsule Agent service..." >&2
     systemctl restart "$SERVICE_NAME.service"
     ensure_service_running
 }

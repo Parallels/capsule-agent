@@ -1,22 +1,15 @@
-## What's Changed in capsule-agent v0.1.30
+## What's Changed in capsule-agent v0.1.31
 
-Base version (stripped): 0.1.30
-- Added a channel selection to the settings to decide the update channel
-- Added a dynamic updater mechanism, fixes #142
-- Removed the checkbox in the end of the technical feedback, fixes #138
-- Fixed an issue with the notification polling using the wrong url
-- Fixed an error on the app-feedback using the wrong type
-- fixed an error where the technical report woul not use the right endpoint
-- Reworked DNS resolver
-- Further improvements in the Marketplace
-- Fixed a bug where you were not able to install a application that you had searched in the apps
-- Further stabilisation of the system
-- Added extra fields for the capsules blueprint 
+Base version (stripped): 0.1.31
+- Fixed an issue where we were not able to disable https and use of the secure app
+- Fixed an issue in one of the endpoints where a lxc service would fail to update
+- Added the new ui-library module so we can share the UI between the capsule-marketplace, capsules-hub and others in the future
+- Moved the capsule-marketplace to use the new ui-lib
 
 ### Installation
 
-Download the appropriate package for your platform from the [release assets](https://github.com/Parallels/capsule-agent/releases/tag/v0.1.30).
+Download the appropriate package for your platform from the [release assets](https://github.com/Parallels/capsule-agent/releases/tag/v0.1.31).
 
 ### Links
 - **Public Repository**: [github.com/Parallels/capsule-agent](https://github.com/Parallels/capsule-agent)
-- **Monorepo Release**: [capsule-agent-v0.1.30](https://github.com/Parallels-Corp/capsule-manager/releases/tag/capsule-agent-v0.1.30)
+- **Monorepo Release**: [capsule-agent-v0.1.31](https://github.com/Parallels-Corp/capsule-manager/releases/tag/capsule-agent-v0.1.31)

@@ -5,6 +5,13 @@ All notable changes to the Capsule Agent module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.31] - 2026-02-06
+
+- Fixed an issue where we were not able to disable https and use of the secure app
+- Fixed an issue in one of the endpoints where a lxc service would fail to update
+- Added the new ui-library module so we can share the UI between the capsule-marketplace, capsules-hub and others in the future
+- Moved the capsule-marketplace to use the new ui-lib
+
 ## [0.1.30] - 2026-01-28
 
 - Added a channel selection to the settings to decide the update channel
@@ -17,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Further improvements in the Marketplace
 - Fixed a bug where you were not able to install a application that you had searched in the apps
 - Further stabilisation of the system
-- Added extra fields for the capsules blueprint 
+- Added extra fields for the capsules blueprint
 
 ## [0.1.29] - 2026-01-19
 
