@@ -119,6 +119,38 @@ while [[ $# -gt 0 ]]; do
             ROOT_PASSWORD="$2"
             shift 2
             ;;
+        --telemetry-user-id)
+            USER_ID="$2"
+            shift 2
+            ;;
+        --telemetry-hardware-id)
+            HARDWARE_ID="$2"
+            shift 2
+            ;;
+        --telemetry-application-id)
+            APPLICATION_ID="$2"
+            shift 2
+            ;;
+        --telemetry-pd-license)
+            PD_LICENSE="$2"
+            shift 2
+            ;;
+        --telemetry-pd-license-type)
+            PD_LICENSE_TYPE="$2"
+            shift 2
+            ;;
+        --telemetry-pd-license-is-trial)
+            PD_LICENSE_IS_TRIAL="$2"
+            shift 2
+            ;;
+        --telemetry-pd-license-is-volume)
+            PD_LICENSE_IS_VOLUME="$2"
+            shift 2
+            ;;
+        --telemetry-pd-id)
+            PD_ID="$2"
+            shift 2
+            ;;
         *)
             echo "Unknown option: $1" >&2
             usage
