@@ -1,4 +1,4 @@
-ecf385ed122cf66a964679289e5e26a578208eb9a5efd77f3a01cb03390544f2  capsule-agent-linux-amd64
-c57f3d563300d545730bf488afc8a4ca2e6bfa6153d1dd34ceacfc21fa7aaf0d  capsule-agent-linux-arm64
-20bb56041325c08ce96bd4fe6befcc8200ff7867dea37bf732e99226e1c75219  capsule-agent_0.1.34-canary.282_linux-amd64.tar.gz
-9c22d29b4473596b1a1a16ce0683b3d3cecbe885ce208b1de74de3a1b1bd6482  capsule-agent_0.1.34-canary.282_linux-arm64.tar.gz
+06801f1579b4f033f0e0083fa6808b088ad1fb04937ab136f6dcfe04e01ef6d9  capsule-agent-linux-amd64
+4a5fe63434a7ea1b54f96a3911f34c559fd5d11e9b1ec3b4b6246730d90fe1d6  capsule-agent-linux-arm64
+e9c0512578408a6f95c4cf76f5ba62039b90b39f0f6bcb47edcfc5e0a9e9872f  capsule-agent_0.1.35_linux-amd64.tar.gz
+b4c7f26d4ef4ee6861c3011d6b262ac2954f22055c99e4bb1c817e55587fb2d6  capsule-agent_0.1.35_linux-arm64.tar.gz
