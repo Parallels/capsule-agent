@@ -1,12 +1,12 @@
-## What's Changed in capsule-agent v0.1.38
+## What's Changed in capsule-agent v0.1.39
 
-Base version (stripped): 0.1.38
-Warning: No changelog content found for version 0.1.38
+Base version (stripped): 0.1.39
+Warning: No changelog content found for version 0.1.39
 
 ### Installation
 
-Download the appropriate package for your platform from the [release assets](https://github.com/Parallels/capsule-agent/releases/tag/v0.1.38).
+Download the appropriate package for your platform from the [release assets](https://github.com/Parallels/capsule-agent/releases/tag/v0.1.39).
 
 ### Links
 - **Public Repository**: [github.com/Parallels/capsule-agent](https://github.com/Parallels/capsule-agent)
-- **Monorepo Release**: [capsule-agent-v0.1.38](https://github.com/Parallels-Corp/capsule-manager/releases/tag/capsule-agent-v0.1.38)
+- **Monorepo Release**: [capsule-agent-v0.1.39](https://github.com/Parallels-Corp/capsule-manager/releases/tag/capsule-agent-v0.1.39)
