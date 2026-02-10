@@ -34,6 +34,7 @@ Usage: $0 [install|update|uninstall] [options]
 Commands:
   install            Install Capsule Agent (default)
   update             Update Capsule Agent binary in-place
+  self-update        Update the binary only (used by auto-updater)
   uninstall          Remove Capsule Agent service and binary
 
 Options:
@@ -51,7 +52,7 @@ VERSION=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        install|update|uninstall|help|-h|--help)
+        install|update|self-update|uninstall|help|-h|--help)
             ACTION=$1
             shift
             if [[ "$ACTION" == "help" || "$ACTION" == "-h" || "$ACTION" == "--help" ]]; then
@@ -439,12 +440,38 @@ function uninstall_capsule_agent() {
     echo "✅ Capsule Agent removed" >&2
 }
 
+function self_update_capsule_agent() {
+    ensure_requirements
+    echo "♻️  Self-updating Capsule Agent..." >&2
+
+    if [[ ! -x "$BINARY_PATH" ]]; then
+        echo "❌ Capsule Agent is not installed. Run install first." >&2
+        exit 1
+    fi
+
+    local binary_name
+    binary_name=$(resolve_arch)
+    local release_tag
+    release_tag=$(get_release_tag)
+    echo "📌 Selected release: ${release_tag}" >&2
+
+    stop_service_if_exists
+    download_binary "$release_tag" "$binary_name"
+
+    echo "🔄 Restarting Capsule Agent service..." >&2
+    start_service
+    ensure_service_running
+}
+
 case "$ACTION" in
     install)
         install_capsule_agent
         ;;
     update)
         update_capsule_agent
+        ;;
+    self-update)
+        self_update_capsule_agent
         ;;
     uninstall)
         uninstall_capsule_agent
