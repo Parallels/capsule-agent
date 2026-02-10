@@ -175,21 +175,40 @@ function ensure_requirements() {
     fi
 }
 
-function resolve_arch() {
+function resolve_binary_name() {
     local arch
     arch=$(uname -m)
+    local os
+    os=$(uname -s)
+    local binary_suffix=""
+
+    case "$os" in
+        Linux)
+            binary_suffix="linux"
+            ;;
+        Darwin)
+            binary_suffix="darwin"
+            ;;
+        *)
+            echo "❌ Unsupported OS: $os" >&2
+            exit 1
+            ;;
+    esac
+
     case "$arch" in
         x86_64)
-            echo "capsule-agent-linux-amd64"
+            binary_suffix="${binary_suffix}-amd64"
             ;;
-        aarch64)
-            echo "capsule-agent-linux-arm64"
+        aarch64|arm64)
+            binary_suffix="${binary_suffix}-arm64"
             ;;
         *)
             echo "❌ Unsupported architecture: $arch" >&2
             exit 1
             ;;
     esac
+
+    echo "${SERVICE_NAME}-${binary_suffix}"
 }
 
 function get_release_tag() {
@@ -227,8 +246,77 @@ function download_binary() {
     echo "📥 Downloading Capsule Agent ${release_tag}..." >&2
     local download_url="https://github.com/$OWNER/$REPO/releases/download/${release_tag}/${binary_name}"
     local sig_url="${download_url}.sig"
-
+    
     curl -sSL -o "$tmp_dir/$binary_name" "$download_url"
+    
+    local extracted_binary=""
+    
+    # Try to detect if it's a tarball
+    if tar -tzf "$tmp_dir/$binary_name" >/dev/null 2>&1; then
+        echo "📦 Detected tar.gz archive, extracting..." >&2
+        mv "$tmp_dir/$binary_name" "$tmp_dir/$binary_name.tar.gz"
+        tar -xzf "$tmp_dir/$binary_name.tar.gz" -C "$tmp_dir"
+        
+        # 1. Exact match of SERVICE_NAME
+        if [[ -f "$tmp_dir/$SERVICE_NAME" ]]; then
+            extracted_binary="$tmp_dir/$SERVICE_NAME"
+        # 2. Exact match of binary_name
+        elif [[ -f "$tmp_dir/$binary_name" ]]; then
+             extracted_binary="$tmp_dir/$binary_name"
+        else
+            # 3. Regex match for service name prefix
+            local regex_match
+            regex_match=$(find "$tmp_dir" -maxdepth 1 -type f -name "${SERVICE_NAME}*" | head -n 1)
+             if [[ -n "$regex_match" ]]; then
+                extracted_binary="$regex_match"
+            else
+                # 4. Fallback search
+                 extracted_binary=$(find "$tmp_dir" -maxdepth 1 -type f -perm +111 -not -name "*.tar.gz" -not -name "*.tgz" -not -name "*.zip" | head -n 1)
+            fi
+        fi
+
+    # Try to detect if it's a zip
+    elif unzip -tq "$tmp_dir/$binary_name" >/dev/null 2>&1; then
+        echo "📦 Detected zip archive, extracting..." >&2
+        mv "$tmp_dir/$binary_name" "$tmp_dir/$binary_name.zip"
+        unzip -q -o "$tmp_dir/$binary_name.zip" -d "$tmp_dir"
+        
+        # 1. Exact match of SERVICE_NAME
+        if [[ -f "$tmp_dir/$SERVICE_NAME" ]]; then
+            extracted_binary="$tmp_dir/$SERVICE_NAME"
+        # 2. Exact match of binary_name
+        elif [[ -f "$tmp_dir/$binary_name" ]]; then
+             extracted_binary="$tmp_dir/$binary_name"
+        else
+            # 3. Regex match for service name prefix
+            local regex_match
+            regex_match=$(find "$tmp_dir" -maxdepth 1 -type f -name "${SERVICE_NAME}*" | head -n 1)
+             if [[ -n "$regex_match" ]]; then
+                extracted_binary="$regex_match"
+            else
+                # 4. Fallback search
+                 extracted_binary=$(find "$tmp_dir" -maxdepth 1 -type f -perm +111 -not -name "*.tar.gz" -not -name "*.tgz" -not -name "*.zip" | head -n 1)
+            fi
+        fi
+
+    else
+        # It's likely the binary itself
+        extracted_binary="$tmp_dir/$binary_name"
+    fi
+
+    # If we extracted an archive and found a binary, or if it was a direct download
+    if [[ -z "$extracted_binary" || ! -f "$extracted_binary" ]]; then
+        echo "❌ Failed to find binary in archive or download failed" >&2
+        ls -la "$tmp_dir" >&2
+        exit 1
+    fi
+    
+    echo "✅ Found binary: $extracted_binary" >&2
+    if [[ "$extracted_binary" != "$tmp_dir/$binary_name" ]]; then
+        mv "$extracted_binary" "$tmp_dir/$binary_name"
+    fi
+
+    # Signature download
     curl -sSL -o "$tmp_dir/${binary_name}.sig" "$sig_url"
 
     # TODO: Add signature verification here if needed
@@ -312,7 +400,7 @@ function install_capsule_agent() {
     ensure_requirements
     echo "🔧 Installing Capsule Agent..." >&2
     local binary_name
-    binary_name=$(resolve_arch)
+    binary_name=$(resolve_binary_name)
     local release_tag
     release_tag=$(get_release_tag)
     echo "📌 Selected release: ${release_tag}"
@@ -405,14 +493,14 @@ function update_env_file_if_needed() {
 function update_capsule_agent() {
     ensure_requirements
     echo "♻️  Updating Capsule Agent..." >&2
-
+    
     if [[ ! -x "$BINARY_PATH" ]]; then
         echo "❌ Capsule Agent is not installed. Run install first." >&2
         exit 1
     fi
 
     local binary_name
-    binary_name=$(resolve_arch)
+    binary_name=$(resolve_binary_name)
     local release_tag
     release_tag=$(get_release_tag)
     echo "📌 Selected release: ${release_tag}" >&2
@@ -450,7 +538,7 @@ function self_update_capsule_agent() {
     fi
 
     local binary_name
-    binary_name=$(resolve_arch)
+    binary_name=$(resolve_binary_name)
     local release_tag
     release_tag=$(get_release_tag)
     echo "📌 Selected release: ${release_tag}" >&2
