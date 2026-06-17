@@ -26,6 +26,7 @@ ENVIRONMENT="stable"
 CADDY_DOMAIN="parallels.internal"
 MARKETPLACE_REGISTRY_URL="https://capsules-registry.parallels.com"
 ROOT_PASSWORD="root"
+API_URL=""
 
 function usage() {
     cat <<EOF >&2
@@ -44,6 +45,7 @@ Options:
   --caddy-domain <domain> Domain to use for Caddy (default: parallels.internal)
   --marketplace-url <url> Marketplace registry URL (default: https://capsules-registry.parallels.com)
   --root-password <password> Root user password (default: root)
+  --api-url <url>    Updater API URL (default: empty)
 EOF
 }
 
@@ -118,6 +120,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --root-password)
             ROOT_PASSWORD="$2"
+            shift 2
+            ;;
+        --api-url)
+            API_URL="$2"
             shift 2
             ;;
         --telemetry-user-id)
@@ -333,6 +339,7 @@ LXC_AGENT_ROOT_USER_USERNAME=root
 LXC_AGENT_ROOT_USER_PASSWORD=$ROOT_PASSWORD
 LXC_AGENT_CORS_ALLOW_ORIGINS=*
 LXC_AGENT_SERVER_BASE_URL=http://localhost:$PORT
+LXC_AGENT_UPDATER_API_URL=$API_URL
 LXC_AGENT_MARKETPLACE_REGISTRY_BASE_URL=$MARKETPLACE_REGISTRY_URL
 LXC_AGENT_SERVER_API_PORT=$PORT
 LXC_AGENT_USER_ID=$USER_ID
@@ -436,6 +443,10 @@ function update_env_file_if_needed() {
     fi
     if [[ "$ROOT_PASSWORD" != "root" ]] && [[ -n "$ROOT_PASSWORD" ]]; then
         update_env_value "LXC_AGENT_ROOT_USER_PASSWORD" "$ROOT_PASSWORD"
+        updated=true
+    fi
+    if [[ -n "$API_URL" ]]; then
+        update_env_value "LXC_AGENT_UPDATER_API_URL" "$API_URL"
         updated=true
     fi
     if [[ "$USER_ID" != "unknown" ]] && [[ -n "$USER_ID" ]]; then
